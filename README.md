@@ -31,10 +31,10 @@ After `fission spec apply`, you can check that functions, http triggers and pack
 ```bash
 $ fission fn list
 NAME           UID                                  ENV EXECUTORTYPE MINSCALE MAXSCALE MINCPU MAXCPU MINMEMORY MAXMEMORY TARGETCPU
-restapi-delete 4dd17984-8a65-11e8-a532-ea45a7fa3496 go  poolmgr      0        1        0      0      0         0         80
-restapi-get    4dd45630-8a65-11e8-a532-ea45a7fa3496 go  poolmgr      0        1        0      0      0         0         80
-restapi-post   4dd73bd5-8a65-11e8-a532-ea45a7fa3496 go  poolmgr      0        1        0      0      0         0         80
-restapi-update 4ddb4339-8a65-11e8-a532-ea45a7fa3496 go  poolmgr      0        1        0      0      0         0         80
+restapi-delete 4dd17984-8a65-11e8-a532-ea45a7fa3496 go  newdeploy    1        3        0      0      0         0         80
+restapi-get    4dd45630-8a65-11e8-a532-ea45a7fa3496 go  newdeploy    1        3        0      0      0         0         80
+restapi-post   4dd73bd5-8a65-11e8-a532-ea45a7fa3496 go  newdeploy    1        3        0      0      0         0         80
+restapi-update 4ddb4339-8a65-11e8-a532-ea45a7fa3496 go  newdeploy    1        3        0      0      0         0         80
 
 $ fission route list
 NAME                                 METHOD HOST URL                             INGRESS FUNCTION_NAME
