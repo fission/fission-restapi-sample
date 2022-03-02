@@ -24,6 +24,19 @@ var (
 	dbConn *gorm.DB
 )
 
+type (
+	Message struct {
+		// field from gorm.Model
+		ID        uint       `json:"id";gorm:"primary_key"`
+		CreatedAt time.Time  `json:"-"`
+		UpdatedAt time.Time  `json:"-"`
+		DeletedAt *time.Time `json:"-";sql:"index"`
+
+		Message   string `json:"message"`
+		Timestamp int64  `json:"timestamp"`
+	}
+)
+
 func init() {
 	if dbConn == nil {
 		dbUrl := "postgresql://root@cockroachdb.guestbook:26257/guestbook?sslmode=disable"
@@ -34,6 +47,36 @@ func init() {
 
 func GetDB() *gorm.DB {
 	return dbConn
+}
+
+func ConnectDB(dbUrl, dbName string) *gorm.DB {
+	conn, err := gorm.Open("postgres", dbUrl)
+	if err != nil {
+		log.Fatalf("Error establishing connection to database(%v): %v", dbUrl, err)
+	}
+	InitDB(conn, dbName)
+	return conn
+}
+
+func InitDB(db *gorm.DB, dbName string) {
+	if db == nil {
+		log.Fatal("Error initializing database with nil db connection")
+	}
+
+	// Create database
+	query := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s", dbName)
+	_, err := db.DB().Exec(query)
+	if err != nil {
+		log.Fatalf("Error creating database: %v", err)
+	}
+
+	// Create tables based on models
+	for _, model := range []interface{}{&Message{}} {
+		err = db.AutoMigrate(model).Error
+		if err != nil {
+			log.Fatalf("Error initializing database: %v", err)
+		}
+	}
 }
 
 // GetPathValue g, "id"et url path parameter from the request header.
