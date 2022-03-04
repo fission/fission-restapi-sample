@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 )
 
@@ -39,7 +40,7 @@ type (
 
 func init() {
 	if dbConn == nil {
-		dbUrl := "postgresql://root@cockroachdb.guestbook:26257/guestbook?sslmode=disable"
+		dbUrl := "postgresql://root@my-release-cockroachdb-public.default.svc.cluster.local:26257?sslmode=disable"
 		dbName := "guestbook"
 		dbConn = ConnectDB(dbUrl, dbName)
 	}
