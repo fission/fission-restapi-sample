@@ -2,13 +2,22 @@ apiVersion: fission.io/v1
 kind: HTTPTrigger
 metadata:
   creationTimestamp: null
-  name: 0b533b77-bf00-4035-bd37-035a68baa597
+  name: restpost
   namespace: default
 spec:
   createingress: false
   functionref:
+    functionweights: null
     name: restapi-post
     type: name
   host: ""
-  method: POST
+  ingressconfig:
+    annotations: null
+    host: '*'
+    path: /guestbook/messages
+    tls: ""
+  method: ""
+  methods:
+  - POST
+  prefix: ""
   relativeurl: /guestbook/messages
