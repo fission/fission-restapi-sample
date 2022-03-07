@@ -1,0 +1,25 @@
+include:
+- restapi-go-pkg.zip
+kind: ArchiveUploadSpec
+name: restapi-go-pkg-zip-4gGe
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: restapi-go-pkg
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: go
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://restapi-go-pkg-zip-4gGe
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-03-02T12:21:40Z"

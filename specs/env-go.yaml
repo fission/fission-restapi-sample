@@ -5,16 +5,13 @@ metadata:
   name: go
   namespace: default
 spec:
-  TerminationGracePeriod: 360
   builder:
     command: build
-    image: fission/go-builder:0.10.0
+    image: fission/go-builder-1.16
+  imagepullsecret: ""
   keeparchive: false
   poolsize: 3
   resources: {}
   runtime:
-    functionendpointport: 0
-    image: fission/go-env:0.10.0
-    loadendpointpath: ""
-    loadendpointport: 0
+    image: fission/go-env-1.16
   version: 2

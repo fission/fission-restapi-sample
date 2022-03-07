@@ -3,5 +3,5 @@
 # Do not edit the UID below: that will break 'fission spec apply'
 apiVersion: fission.io/v1
 kind: DeploymentConfig
-name: restful-api-go
-uid: ade74f35-005f-404b-973c-0f5b1b84275c
+name: fission-restapi-sample
+uid: 207e0227-2ca9-4ab8-9c7f-39dd8dddf531

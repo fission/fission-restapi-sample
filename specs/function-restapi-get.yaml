@@ -10,17 +10,19 @@ spec:
       ExecutorType: newdeploy
       MaxScale: 3
       MinScale: 1
+      SpecializationTimeout: 120
       TargetCPUPercent: 80
     StrategyType: execution
-  configmaps: null
+  concurrency: 500
   environment:
     name: go
     namespace: default
+  functionTimeout: 60
+  idletimeout: 120
   package:
     functionName: MessageGetHandler
     packageref:
       name: restapi-go-pkg
       namespace: default
-      resourceversion: "133729"
+  requestsPerPod: 1
   resources: {}
-  secrets: null
