@@ -120,3 +120,20 @@ $ curl -X DELETE \
     http://${FISSION_ROUTER}/guestbook/messages/366456868654284801 \
     -H 'Cache-Control: no-cache'
 ```
+
+## Spec generation
+
+```console
+fission spec init
+fission env create --name go --image fission/go-env-1.16 --builder fission/go-builder-1.16 --spec
+fission pkg create --name restapi-go-pkg --env go --spec
+fission fn create --name restapi-delete --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessageDeleteHandler --spec
+fission fn create --name restapi-update --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessageUpdateHandler --spec
+fission fn create --name restapi-post --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessagePostHandler --spec
+fission fn create --name restapi-get --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessageGetHandler --spec
+fission httptrigger create --url /guestbook/messages --method POST --function restapi-post --spec --name restpost
+fission httptrigger create --url "/guestbook/messages/{id:[0-9]+}" --method PUT --function restapi-update --spec --name restupdate
+fission httptrigger create --url "/guestbook/messages/{id:[0-9]+}" --method GET --function restapi-get --spec --name restgetpart
+fission httptrigger create --url "/guestbook/messages/{id:[0-9]+}" --method DELETE --function restapi-delete --spec --name restdelete
+fission httptrigger create --url "/guestbook/messages/" --method GET --function restapi-get --spec --name restget
+```
