@@ -2,7 +2,7 @@
 
 In this sample, we create a simple guestbook application to demonstrates how to create a set of CURD RESTful APIs with fission function.
 
-# Installation
+## Installation
 
 1. Install cockroachdb operator using helm
 
@@ -53,7 +53,7 @@ If the build status of the package shows failed, try rebuilding it.
 fission pkg rebuild --name restapi-go-pkg
 ```
 
-# Usage
+## Usage
 
 1. Create a post
 
