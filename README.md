@@ -4,19 +4,32 @@ In this sample, we create a simple guestbook application to demonstrates how to 
 
 ## Installation
 
-1. Install cockroachdb operator using helm
+1. Add the cockroachdb helm chart
+
+```bash
+helm repo add cockroachdb https://charts.cockroachdb.com/
+helm repo update
+```
+
+2. Install cockroachdb operator using helm
 
 ```bash
 helm install my-release --values cockroachdb.yaml cockroachdb/cockroachdb
 ```
 
-2. Use `fission spec` to create application
+3. Zip the files in the rest-api folder
+
+```bash
+zip -j restapi-go-pkg.zip rest-api/*
+```
+
+4. Use `fission spec` to create application
 
 ```bash
 fission spec apply
 ```
 
-3. Check application status
+5. Check application status
 
 After `fission spec apply`, you can check that functions, http triggers and package are successfully created.
 
@@ -126,7 +139,7 @@ $ curl -X DELETE \
 ```console
 fission spec init
 fission env create --name go --image fission/go-env-1.16 --builder fission/go-builder-1.16 --spec
-fission pkg create --name restapi-go-pkg --env go --spec
+fission pkg create --name restapi-go-pkg --src restapi-go-pkg.zip --env go --spec
 fission fn create --name restapi-delete --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessageDeleteHandler --spec
 fission fn create --name restapi-update --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessageUpdateHandler --spec
 fission fn create --name restapi-post --executortype newdeploy --maxscale 3 --env go --pkg restapi-go-pkg --entrypoint MessagePostHandler --spec
